@@ -1,0 +1,125 @@
+CUDNN:
+  BENCHMARK: true
+  DETERMINISTIC: false
+  ENABLED: true
+BACKBONE_MODEL: 'pose_resnet'
+MODEL: 'multi_person_posenet'
+DATA_DIR: ''
+GPUS: '0,1,2,3,4,5,6,7'
+OUTPUT_DIR: 'output'
+LOG_DIR: 'log'
+WORKERS: 4
+PRINT_FREQ: 100
+
+DATASET:
+  COLOR_RGB: True
+  TRAIN_DATASET: 'panoptic'
+  TEST_DATASET: 'panoptic'
+  DATA_FORMAT: jpg
+  DATA_AUGMENTATION: False
+  FLIP: False
+  ROOT: 'data/panoptic/'
+  ROT_FACTOR: 45
+  SCALE_FACTOR: 0.35
+  TEST_SUBSET: 'validation'
+  TRAIN_SUBSET: 'train'
+  ROOTIDX: 2
+  CAMERA_NUM: 5
+NETWORK:
+  PRETRAINED_BACKBONE: "models/pose_resnet50_panoptic.pth.tar"
+  PRETRAINED:  '' 
+  TARGET_TYPE: gaussian
+  IMAGE_SIZE:
+  - 960
+  - 512
+  HEATMAP_SIZE:
+  - 240
+  - 128
+  SIGMA: 3
+  NUM_JOINTS: 15
+  USE_GT: False
+POSE_RESNET:
+  FINAL_CONV_KERNEL: 1
+  DECONV_WITH_BIAS: False
+  NUM_DECONV_LAYERS: 3
+  NUM_DECONV_FILTERS:
+  - 256
+  - 256
+  - 256
+  NUM_DECONV_KERNELS:
+  - 4
+  - 4
+  - 4
+  NUM_LAYERS: 50
+LOSS:
+  USE_TARGET_WEIGHT: true
+TRAIN:
+  BATCH_SIZE: 1
+  SHUFFLE: true
+  BEGIN_EPOCH: 0
+  END_EPOCH: 200
+  RESUME: true
+  OPTIMIZER: adam
+  LR: 0.0001
+TEST:
+  MODEL_FILE: 'model_best.pth.tar'
+  BATCH_SIZE: 1
+DEBUG:
+  DEBUG: true
+  SAVE_HEATMAPS_GT: true
+  SAVE_HEATMAPS_PRED: true
+MULTI_PERSON:
+  SPACE_SIZE:
+    - 8000.0
+    - 8000.0
+    - 2000.0
+  SPACE_CENTER:
+    - 0.0 # 120.0
+    - -500.0 # -600.0
+    - 800.0
+  INITIAL_CUBE_SIZE:
+    - 80
+    - 80
+    - 20
+  MAX_PEOPLE_NUM: 10
+  THRESHOLD: 0.3
+PICT_STRUCT:
+  GRID_SIZE:
+    - 2000.0
+    - 2000.0
+    - 2000.0
+  CUBE_SIZE:
+    - 64
+    - 64
+    - 64
+DECODER:
+  d_model: 256
+  nhead: 8
+  dim_feedforward: 1024
+  dropout: 0.1
+  activation: 'relu'
+  num_feature_levels: 1
+  dec_n_points: 4
+  num_decoder_layers: 6
+  return_intermediate_dec: True
+  num_instance: 10
+  num_keypoints: 15
+  with_box_refine: True
+  aux_loss: True
+  lr_linear_proj_mult: 0.1
+  loss_bbox_normalize: False
+  loss_joint_type: 'l1'
+  pred_class_fuse: 'mean'
+  pred_conf_threshold: 0.5
+  match_coord: 'norm'
+  detach_refpoints_cameraprj_firstlayer: True
+  fuse_view_feats: 'cat_proj'
+  epipolar_encoder: False
+  voxel_input_detach_input_grad: True
+  voxel_output_abs_coord: True
+
+  optimizer: adam
+  query_embed_type: perjoint
+  projattn_posembed_mode: use_rayconv
+  use_loss_pose_perprojection: True
+  query_adaptation: False
