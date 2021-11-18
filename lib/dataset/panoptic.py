@@ -252,7 +252,7 @@ class Panoptic(JointsDataset):
     #         return None
 
     def __getitem__(self, idx):
-        input, meta = [], [], [], [], [], []
+        input, meta = [], []
         for k in range(self.num_views):
             i, m = super().__getitem__(self.num_views * idx + k)
             input.append(i)
