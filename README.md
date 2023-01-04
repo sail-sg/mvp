@@ -3,7 +3,7 @@
 
 This is the official implementation of our NeurIPS-2021 work: Multi-view Pose Transformer (MvP). **MvP is a simple algorithm that directly regresses multi-person 3D human pose from multi-view images.**
 
-[News] A Re-implementation is integrated into **xrmocap**: at https://github.com/openxrlab/xrmocap
+**:star::star::star:[News] A Re-implementation is integrated into **xrmocap**: at https://github.com/openxrlab/xrmocap**
 
 ## Framework
 ![mvp_framework](https://github.com/sail-sg/mvp/blob/main/figures/mvp_framework.png)
